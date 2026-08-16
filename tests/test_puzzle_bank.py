@@ -120,3 +120,9 @@ def test_before_launch_clamps_to_day_zero(tmp_path):
     puzzle, number = puzzle_for_date(bank, date(2026, 8, 1))
     assert puzzle.id == 1
     assert number == 1
+
+
+def test_shipped_bank_is_valid():
+    from pathlib import Path
+    bank = load_bank(Path(__file__).parent.parent / "puzzles.json")
+    assert len(bank.puzzles) == 15
