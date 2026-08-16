@@ -42,3 +42,41 @@ class GameState:
     def __post_init__(self) -> None:
         if not self.word_order:
             self.word_order = list(self.puzzle.all_words)
+
+
+def submit_guess(state: GameState, words: set[str]) -> GuessResult:
+    if len(words) != 4:
+        raise ValueError("A guess must contain exactly 4 words.")
+    if not words <= set(state.word_order):
+        raise ValueError("Guess contains words not on the board.")
+    guess = frozenset(words)
+    if guess in state.guesses:
+        return GuessResult.ALREADY_GUESSED
+    state.guesses.append(guess)
+
+    unfound = [g for g in state.puzzle.groups if g not in state.found]
+    for group in unfound:
+        if words == set(group.words):
+            state.found.append(group)
+            state.word_order = [w for w in state.word_order if w not in words]
+            return GuessResult.CORRECT
+
+    state.mistakes_left -= 1
+    if any(len(words & set(g.words)) == 3 for g in unfound):
+        return GuessResult.ONE_AWAY
+    return GuessResult.WRONG
+
+
+def is_won(state: GameState) -> bool:
+    return len(state.found) == 4
+
+
+def is_lost(state: GameState) -> bool:
+    return state.mistakes_left == 0
+
+
+def remaining_groups(state: GameState) -> list[Group]:
+    return sorted(
+        (g for g in state.puzzle.groups if g not in state.found),
+        key=lambda g: g.tier,
+    )
