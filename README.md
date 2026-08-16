@@ -7,11 +7,12 @@ categories. New puzzle every day; four mistakes allowed.
 ## Run locally
 
     python3 -m venv .venv
-    .venv/bin/pip install -r requirements.txt
+    .venv/bin/pip install -r requirements.txt -r requirements-dev.txt
     .venv/bin/streamlit run app.py
 
 ## Tests
 
+    .venv/bin/pip install -r requirements.txt -r requirements-dev.txt
     .venv/bin/pytest
 
 ## Deploy (Streamlit Cloud)

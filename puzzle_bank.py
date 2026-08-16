@@ -19,17 +19,37 @@ class PuzzleBank:
     puzzles: tuple[Puzzle, ...]
 
 
-def _parse_puzzle(raw: dict) -> Puzzle:
+def _parse_puzzle(raw: object, index: int) -> Puzzle:
+    if not isinstance(raw, dict):
+        raise PuzzleBankError(f"bank: puzzle at index {index} must be an object")
+
     puzzle_id = raw.get("id")
+    if not isinstance(puzzle_id, int) or isinstance(puzzle_id, bool):
+        raise PuzzleBankError(f"bank: puzzle at index {index} must have an integer 'id'")
+
     groups = raw.get("groups", [])
+    if not isinstance(groups, list) or not all(isinstance(g, dict) for g in groups):
+        raise PuzzleBankError(f"puzzle {puzzle_id}: 'groups' must be a list of objects")
     if len(groups) != 4:
         raise PuzzleBankError(f"puzzle {puzzle_id}: expected 4 groups, got {len(groups)}")
-    tiers = sorted(g.get("tier") for g in groups)
+
+    for g in groups:
+        tier = g.get("tier")
+        if not isinstance(tier, int) or isinstance(tier, bool):
+            raise PuzzleBankError(f"puzzle {puzzle_id}: group tier must be an integer, got {tier!r}")
+        name = g.get("name")
+        if not isinstance(name, str):
+            raise PuzzleBankError(f"puzzle {puzzle_id}: group name must be a string, got {name!r}")
+        words = g.get("words")
+        if not isinstance(words, list) or not all(isinstance(w, str) for w in words):
+            raise PuzzleBankError(f"puzzle {puzzle_id}: group '{name}' words must be a list of strings")
+
+    tiers = sorted(g["tier"] for g in groups)
     if tiers != [1, 2, 3, 4]:
         raise PuzzleBankError(f"puzzle {puzzle_id}: tiers must be exactly 1-4, got {tiers}")
     for g in groups:
-        if len(g.get("words", [])) != 4:
-            raise PuzzleBankError(f"puzzle {puzzle_id}: group '{g.get('name')}' must have 4 words")
+        if len(g["words"]) != 4:
+            raise PuzzleBankError(f"puzzle {puzzle_id}: group '{g['name']}' must have 4 words")
     all_words = [w.upper() for g in groups for w in g["words"]]
     if len(set(all_words)) != 16:
         raise PuzzleBankError(f"puzzle {puzzle_id}: words must be 16 unique terms (case-insensitive)")
@@ -48,16 +68,21 @@ def load_bank(path: str | Path) -> PuzzleBank:
     except (OSError, json.JSONDecodeError) as exc:
         raise PuzzleBankError(f"cannot read puzzle bank: {exc}") from exc
 
+    if not isinstance(raw, dict):
+        raise PuzzleBankError("bank: top-level JSON must be an object")
+
     try:
         launch_date = date.fromisoformat(raw.get("launch_date", ""))
-    except ValueError as exc:
+    except (ValueError, TypeError) as exc:
         raise PuzzleBankError(f"invalid launch_date: {raw.get('launch_date')!r}") from exc
 
     raw_puzzles = raw.get("puzzles", [])
+    if not isinstance(raw_puzzles, list):
+        raise PuzzleBankError("bank: 'puzzles' must be a list")
     if not raw_puzzles:
         raise PuzzleBankError("puzzle bank must contain at least one puzzle")
 
-    puzzles = tuple(_parse_puzzle(p) for p in raw_puzzles)
+    puzzles = tuple(_parse_puzzle(p, i) for i, p in enumerate(raw_puzzles))
     ids = [p.id for p in puzzles]
     if len(set(ids)) != len(ids):
         raise PuzzleBankError("duplicate puzzle ids in bank")

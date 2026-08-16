@@ -78,6 +78,55 @@ def test_rejects_bad_launch_date(tmp_path):
         load_bank(write_bank(tmp_path, bad))
 
 
+def test_rejects_missing_tier(tmp_path):
+    bad = valid_bank_dict()
+    del bad["puzzles"][0]["groups"][0]["tier"]
+    with pytest.raises(PuzzleBankError, match="tier"):
+        load_bank(write_bank(tmp_path, bad))
+
+
+def test_rejects_missing_name(tmp_path):
+    bad = valid_bank_dict()
+    del bad["puzzles"][0]["groups"][0]["name"]
+    with pytest.raises(PuzzleBankError, match="name"):
+        load_bank(write_bank(tmp_path, bad))
+
+
+def test_rejects_missing_puzzle_id(tmp_path):
+    bad = valid_bank_dict()
+    del bad["puzzles"][0]["id"]
+    with pytest.raises(PuzzleBankError, match="id"):
+        load_bank(write_bank(tmp_path, bad))
+
+
+def test_rejects_groups_not_a_list(tmp_path):
+    bad = valid_bank_dict()
+    bad["puzzles"][0]["groups"] = "not-a-list"
+    with pytest.raises(PuzzleBankError, match="groups"):
+        load_bank(write_bank(tmp_path, bad))
+
+
+def test_rejects_word_not_a_string(tmp_path):
+    bad = valid_bank_dict()
+    bad["puzzles"][0]["groups"][0]["words"][0] = 12345
+    with pytest.raises(PuzzleBankError, match="words"):
+        load_bank(write_bank(tmp_path, bad))
+
+
+def test_rejects_tier_as_string(tmp_path):
+    bad = valid_bank_dict()
+    bad["puzzles"][0]["groups"][0]["tier"] = "1"
+    with pytest.raises(PuzzleBankError, match="tier"):
+        load_bank(write_bank(tmp_path, bad))
+
+
+def test_rejects_puzzles_not_a_list(tmp_path):
+    bad = valid_bank_dict()
+    bad["puzzles"] = "not-a-list"
+    with pytest.raises(PuzzleBankError, match="puzzles"):
+        load_bank(write_bank(tmp_path, bad))
+
+
 def test_rejects_empty_puzzle_list(tmp_path):
     bad = valid_bank_dict()
     bad["puzzles"] = []

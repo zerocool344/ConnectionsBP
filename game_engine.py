@@ -61,7 +61,7 @@ def submit_guess(state: GameState, words: set[str]) -> GuessResult:
             state.word_order = [w for w in state.word_order if w not in words]
             return GuessResult.CORRECT
 
-    state.mistakes_left -= 1
+    state.mistakes_left = max(0, state.mistakes_left - 1)
     if any(len(words & set(g.words)) == 3 for g in unfound):
         return GuessResult.ONE_AWAY
     return GuessResult.WRONG
@@ -72,7 +72,7 @@ def is_won(state: GameState) -> bool:
 
 
 def is_lost(state: GameState) -> bool:
-    return state.mistakes_left == 0
+    return state.mistakes_left <= 0
 
 
 def remaining_groups(state: GameState) -> list[Group]:

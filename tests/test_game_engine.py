@@ -103,6 +103,25 @@ def test_loss_after_four_mistakes():
     assert not is_won(state)
 
 
+def test_fifth_wrong_guess_after_loss_clamps_mistakes_and_stays_lost():
+    state = GameState(puzzle=make_puzzle())
+    wrong_guesses = [
+        {"GATE", "GLOBE", "PSV", "LIP"},
+        {"GATE", "GLOBE", "PSV", "GLAND"},
+        {"GATE", "GLOBE", "LT", "LIP"},
+        {"GATE", "GLOBE", "TE", "LIP"},
+    ]
+    for guess in wrong_guesses:
+        submit_guess(state, guess)
+    assert state.mistakes_left == 0
+    assert is_lost(state)
+
+    result = submit_guess(state, {"IMPELLER", "GATE", "MECHANICAL", "PSV"})
+    assert result is GuessResult.WRONG
+    assert state.mistakes_left == 0
+    assert is_lost(state)
+
+
 def test_remaining_groups_in_tier_order():
     state = GameState(puzzle=make_puzzle())
     submit_guess(state, {"MECHANICAL", "LABYRINTH", "LIP", "GLAND"})
