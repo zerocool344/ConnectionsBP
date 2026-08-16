@@ -108,3 +108,25 @@ def test_remaining_groups_in_tier_order():
     submit_guess(state, {"MECHANICAL", "LABYRINTH", "LIP", "GLAND"})
     remaining = remaining_groups(state)
     assert [g.tier for g in remaining] == [1, 2, 4]
+
+
+from game_engine import emoji_grid
+
+
+def test_emoji_grid_title_and_rows():
+    state = GameState(puzzle=make_puzzle())
+    submit_guess(state, {"IMPELLER", "VOLUTE", "WEAR RING", "SHAFT SLEEVE"})  # correct tier 1
+    submit_guess(state, {"GATE", "GLOBE", "BUTTERFLY", "PSV"})  # one away
+    grid = emoji_grid(state, puzzle_number=12)
+    lines = grid.split("\n")
+    assert lines[0] == "Plant Connections #12"
+    assert lines[1] == "🟨🟨🟨🟨"
+    assert sorted(lines[2]) == sorted("🟩🟩🟩🟪")
+
+
+def test_emoji_grid_row_is_deterministic():
+    state_a = GameState(puzzle=make_puzzle())
+    state_b = GameState(puzzle=make_puzzle())
+    submit_guess(state_a, {"GATE", "GLOBE", "BUTTERFLY", "PSV"})
+    submit_guess(state_b, {"PSV", "BUTTERFLY", "GLOBE", "GATE"})
+    assert emoji_grid(state_a, 1) == emoji_grid(state_b, 1)

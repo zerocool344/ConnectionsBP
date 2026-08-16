@@ -80,3 +80,12 @@ def remaining_groups(state: GameState) -> list[Group]:
         (g for g in state.puzzle.groups if g not in state.found),
         key=lambda g: g.tier,
     )
+
+
+def emoji_grid(state: GameState, puzzle_number: int) -> str:
+    tier_of = {word: g.tier for g in state.puzzle.groups for word in g.words}
+    lines = [f"Plant Connections #{puzzle_number}"]
+    for guess in state.guesses:
+        ordered = sorted(guess, key=lambda w: (tier_of[w], w))
+        lines.append("".join(TIER_EMOJI[tier_of[w]] for w in ordered))
+    return "\n".join(lines)
