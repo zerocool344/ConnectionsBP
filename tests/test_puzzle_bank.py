@@ -1,8 +1,9 @@
 import json
+from datetime import date
 
 import pytest
 
-from puzzle_bank import PuzzleBankError, load_bank
+from puzzle_bank import PuzzleBankError, load_bank, puzzle_for_date
 
 
 def valid_bank_dict() -> dict:
@@ -82,3 +83,40 @@ def test_rejects_empty_puzzle_list(tmp_path):
     bad["puzzles"] = []
     with pytest.raises(PuzzleBankError, match="at least one"):
         load_bank(write_bank(tmp_path, bad))
+
+
+def two_puzzle_bank(tmp_path):
+    bank_dict = valid_bank_dict()
+    second = json.loads(json.dumps(bank_dict["puzzles"][0]))
+    second["id"] = 2
+    second["groups"][0]["words"] = ["BEARING", "COUPLING", "CASING", "BASEPLATE"]
+    bank_dict["puzzles"].append(second)
+    return load_bank(write_bank(tmp_path, bank_dict))
+
+
+def test_launch_day_is_puzzle_one(tmp_path):
+    bank = two_puzzle_bank(tmp_path)
+    puzzle, number = puzzle_for_date(bank, date(2026, 8, 17))
+    assert puzzle.id == 1
+    assert number == 1
+
+
+def test_next_day_is_puzzle_two(tmp_path):
+    bank = two_puzzle_bank(tmp_path)
+    puzzle, number = puzzle_for_date(bank, date(2026, 8, 18))
+    assert puzzle.id == 2
+    assert number == 2
+
+
+def test_cycles_when_bank_exhausted(tmp_path):
+    bank = two_puzzle_bank(tmp_path)
+    puzzle, number = puzzle_for_date(bank, date(2026, 8, 19))
+    assert puzzle.id == 1
+    assert number == 3
+
+
+def test_before_launch_clamps_to_day_zero(tmp_path):
+    bank = two_puzzle_bank(tmp_path)
+    puzzle, number = puzzle_for_date(bank, date(2026, 8, 1))
+    assert puzzle.id == 1
+    assert number == 1

@@ -62,3 +62,8 @@ def load_bank(path: str | Path) -> PuzzleBank:
     if len(set(ids)) != len(ids):
         raise PuzzleBankError("duplicate puzzle ids in bank")
     return PuzzleBank(launch_date=launch_date, puzzles=puzzles)
+
+
+def puzzle_for_date(bank: PuzzleBank, today: date) -> tuple[Puzzle, int]:
+    day = max(0, (today - bank.launch_date).days)
+    return bank.puzzles[day % len(bank.puzzles)], day + 1
