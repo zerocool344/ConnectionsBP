@@ -35,6 +35,22 @@ div.stButton > button {
     transition: transform 0.1s ease;
 }
 div.stButton > button:active { transform: scale(0.96); }
+/* Selected tiles and Submit: neutral dark, not the theme's error red. */
+div.stButton > button[kind="primary"],
+div.stButton > button[kind="primary"]:hover,
+div.stButton > button[kind="primary"]:focus,
+div.stButton > button[kind="primary"]:focus:not(:active) {
+    background-color: #5a594e;
+    border-color: #5a594e;
+    color: #ffffff;
+    box-shadow: none;
+}
+div.stButton > button[kind="primary"]:hover { background-color: #4a493f; }
+div.stButton > button[kind="primary"]:disabled {
+    background-color: #d7d7d0;
+    border-color: #d7d7d0;
+    color: #8b8b83;
+}
 .group-banner {
     border-radius: 8px;
     padding: 0.6rem 1rem;
@@ -113,6 +129,7 @@ def render_board(state: GameState) -> None:
                 type="primary" if selected else "secondary",
                 on_click=toggle_word,
                 args=(word,),
+                width="stretch",
             )
 
 
@@ -120,13 +137,22 @@ def render_controls(state: GameState) -> None:
     dots = "🔵" * state.mistakes_left + "⚪" * (4 - state.mistakes_left)
     st.markdown(f'<div class="mistake-dots">{dots}</div>', unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
-    c1.button("Shuffle", on_click=lambda: random.shuffle(state.word_order))
-    c2.button("Deselect all", on_click=lambda: st.session_state.selected.clear())
+    c1.button(
+        "Shuffle",
+        on_click=lambda: random.shuffle(state.word_order),
+        width="stretch",
+    )
+    c2.button(
+        "Deselect all",
+        on_click=lambda: st.session_state.selected.clear(),
+        width="stretch",
+    )
     c3.button(
         "Submit",
         type="primary",
         disabled=len(st.session_state.selected) != 4,
         on_click=handle_submit,
+        width="stretch",
     )
 
 
