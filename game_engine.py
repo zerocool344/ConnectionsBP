@@ -38,6 +38,7 @@ class GameState:
     mistakes_left: int = 4
     guesses: list[frozenset[str]] = field(default_factory=list)
     word_order: list[str] = field(default_factory=list)
+    hint_used: bool = False
 
     def __post_init__(self) -> None:
         if not self.word_order:
@@ -89,3 +90,25 @@ def emoji_grid(state: GameState, puzzle_number: int) -> str:
         ordered = sorted(guess, key=lambda w: (tier_of[w], w))
         lines.append("".join(TIER_EMOJI[tier_of[w]] for w in ordered))
     return "\n".join(lines)
+
+
+def get_hint(state: GameState) -> str:
+    """Reveals the name of an unfound category."""
+    state.hint_used = True
+    unfound = remaining_groups(state)
+    if unfound:
+        return unfound[0].name
+    return ""
+
+
+def calculate_score(state: GameState) -> int:
+    """Calculates the final score based on win, mistakes, and hints."""
+    if not is_won(state):
+        return 0
+    
+    score = 100
+    mistakes_made = 4 - state.mistakes_left
+    score -= mistakes_made * 10
+    if state.hint_used:
+        score -= 20
+    return max(0, score)

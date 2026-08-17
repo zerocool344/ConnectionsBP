@@ -89,6 +89,8 @@ def load_bank(path: str | Path) -> PuzzleBank:
     return PuzzleBank(launch_date=launch_date, puzzles=puzzles)
 
 
-def puzzle_for_date(bank: PuzzleBank, today: date) -> tuple[Puzzle, int]:
+def puzzles_for_date(bank: PuzzleBank, today: date) -> tuple[tuple[Puzzle, int], tuple[Puzzle, int]]:
     day = max(0, (today - bank.launch_date).days)
-    return bank.puzzles[day % len(bank.puzzles)], day + 1
+    idx1 = (day * 2) % len(bank.puzzles)
+    idx2 = (day * 2 + 1) % len(bank.puzzles)
+    return (bank.puzzles[idx1], idx1 + 1), (bank.puzzles[idx2], idx2 + 1)

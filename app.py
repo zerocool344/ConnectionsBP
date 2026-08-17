@@ -11,8 +11,11 @@ from game_engine import (
     is_won,
     remaining_groups,
     submit_guess,
+    get_hint,
+    calculate_score
 )
-from puzzle_bank import PuzzleBankError, load_bank, puzzle_for_date
+from puzzle_bank import PuzzleBankError, load_bank, puzzles_for_date
+from leaderboard import get_top_scores, save_score
 
 TIER_COLORS = {1: "#f9df6d", 2: "#a0c35a", 3: "#b0c4ef", 4: "#ba81c5"}
 TIER_NAMES = {1: "Operator", 2: "Technician", 3: "Engineer", 4: "Plant Manager"}
@@ -66,35 +69,49 @@ div.stButton > button[kind="primary"]:disabled {
     to { opacity: 1; transform: translateY(0); }
 }
 .mistake-dots { text-align: center; font-size: 1.2rem; letter-spacing: 0.4rem; }
+.leaderboard-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+}
 </style>
 """
 
 
 def init_state() -> None:
-    if "game" in st.session_state:
+    if "game_daily" in st.session_state:
         return
     bank = load_bank("puzzles.json")
-    puzzle, number = puzzle_for_date(bank, date.today())
-    state = GameState(puzzle=puzzle)
-    random.shuffle(state.word_order)
-    st.session_state.game = state
-    st.session_state.puzzle_number = number
-    st.session_state.selected = set()
+    (p1, n1), (p2, n2) = puzzles_for_date(bank, date.today())
+    
+    state1 = GameState(puzzle=p1)
+    random.shuffle(state1.word_order)
+    st.session_state.game_daily = state1
+    st.session_state.puzzle_number_daily = n1
+    st.session_state.selected_daily = set()
+
+    state2 = GameState(puzzle=p2)
+    random.shuffle(state2.word_order)
+    st.session_state.game_bonus = state2
+    st.session_state.puzzle_number_bonus = n2
+    st.session_state.selected_bonus = set()
 
 
-def toggle_word(word: str) -> None:
-    selected: set[str] = st.session_state.selected
+def toggle_word(word: str, prefix: str) -> None:
+    selected: set[str] = st.session_state[f"selected_{prefix}"]
     if word in selected:
         selected.remove(word)
     elif len(selected) < 4:
         selected.add(word)
 
 
-def handle_submit() -> None:
-    state: GameState = st.session_state.game
-    result = submit_guess(state, set(st.session_state.selected))
+def handle_submit(prefix: str) -> None:
+    state: GameState = st.session_state[f"game_{prefix}"]
+    selected: set[str] = st.session_state[f"selected_{prefix}"]
+    result = submit_guess(state, set(selected))
     if result is GuessResult.CORRECT:
-        st.session_state.selected = set()
+        st.session_state[f"selected_{prefix}"] = set()
     elif result is GuessResult.ONE_AWAY:
         st.toast("One away!", icon="⚠️")
     elif result is GuessResult.ALREADY_GUESSED:
@@ -113,80 +130,152 @@ def render_banner(group) -> None:
     )
 
 
-def render_board(state: GameState) -> None:
-    """Single seam for board drawing — replace internals with an HTML
-    component later without touching engine or bank."""
+def render_board(state: GameState, prefix: str) -> None:
     for group in state.found:
         render_banner(group)
     words = state.word_order
+    selected = st.session_state[f"selected_{prefix}"]
     for row_start in range(0, len(words), 4):
         cols = st.columns(4)
         for col, word in zip(cols, words[row_start : row_start + 4]):
-            selected = word in st.session_state.selected
+            is_sel = word in selected
             col.button(
                 word,
-                key=f"tile-{word}",
-                type="primary" if selected else "secondary",
+                key=f"tile-{prefix}-{word}",
+                type="primary" if is_sel else "secondary",
                 on_click=toggle_word,
-                args=(word,),
+                args=(word, prefix),
                 width="stretch",
             )
 
 
-def render_controls(state: GameState) -> None:
+def render_controls(state: GameState, prefix: str) -> None:
     dots = "🔵" * state.mistakes_left + "⚪" * (4 - state.mistakes_left)
     st.markdown(f'<div class="mistake-dots">{dots}</div>', unsafe_allow_html=True)
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3, c4 = st.columns(4)
     c1.button(
         "Shuffle",
+        key=f"shuffle-{prefix}",
         on_click=lambda: random.shuffle(state.word_order),
         width="stretch",
     )
     c2.button(
-        "Deselect all",
-        on_click=lambda: st.session_state.selected.clear(),
+        "Deselect",
+        key=f"deselect-{prefix}",
+        on_click=lambda: st.session_state[f"selected_{prefix}"].clear(),
         width="stretch",
     )
+    
+    def apply_hint():
+        get_hint(state)
+        
     c3.button(
-        "Submit",
-        type="primary",
-        disabled=len(st.session_state.selected) != 4,
-        on_click=handle_submit,
+        "Hint",
+        key=f"hint-{prefix}",
+        on_click=apply_hint,
+        disabled=state.hint_used,
         width="stretch",
     )
+    c4.button(
+        "Submit",
+        key=f"submit-{prefix}",
+        type="primary",
+        disabled=len(st.session_state[f"selected_{prefix}"]) != 4,
+        on_click=handle_submit,
+        args=(prefix,),
+        width="stretch",
+    )
+    
+    if state.hint_used and not is_won(state) and not is_lost(state):
+        unfound = remaining_groups(state)
+        if unfound:
+            st.info(f"💡 Hint: Look for the category **'{unfound[0].name}'**")
 
 
-def render_end_screen(state: GameState) -> None:
+def render_end_screen(state: GameState, prefix: str) -> None:
+    score = calculate_score(state)
+    puzzle_number = st.session_state[f"puzzle_number_{prefix}"]
+    
     if is_won(state):
         mistakes_used = 4 - state.mistakes_left
-        st.success(f"Solved it! {TAGLINES[mistakes_used]}")
+        st.success(f"Solved it! {TAGLINES[mistakes_used]} | **Score: {score}**")
     else:
-        st.error(LOSS_TAGLINE)
+        st.error(f"{LOSS_TAGLINE} | **Score: 0**")
         for group in remaining_groups(state):
             render_banner(group)
+            
+    if is_won(state):
+        st.subheader("Submit your score")
+        if f"score_submitted_{prefix}" not in st.session_state:
+            st.session_state[f"score_submitted_{prefix}"] = False
+            
+        if not st.session_state[f"score_submitted_{prefix}"]:
+            with st.form(key=f"score_form_{prefix}"):
+                name = st.text_input("Your Name", max_chars=20)
+                if st.form_submit_button("Submit Score"):
+                    if name.strip():
+                        save_score(name.strip(), score, puzzle_number)
+                        st.session_state[f"score_submitted_{prefix}"] = True
+                        st.rerun()
+                    else:
+                        st.warning("Please enter a name.")
+        else:
+            st.info("Score submitted to leaderboard!")
+            
     st.subheader("Share your result")
-    st.code(emoji_grid(state, st.session_state.puzzle_number), language=None)
+    st.code(emoji_grid(state, puzzle_number), language=None)
     st.caption("Copy icon in the top-right of the box — paste it in Teams.")
 
 
+def render_game_tab(prefix: str, title: str) -> None:
+    state: GameState = st.session_state[f"game_{prefix}"]
+    puzzle_number = st.session_state[f"puzzle_number_{prefix}"]
+    
+    st.subheader(f"🏭 {title} #{puzzle_number}")
+    st.caption("Group the 16 terms into 4 categories. Four mistakes allowed.")
+    if is_won(state) or is_lost(state):
+        for group in state.found:
+            render_banner(group)
+        render_end_screen(state, prefix)
+    else:
+        render_board(state, prefix)
+        render_controls(state, prefix)
+
+
+def render_leaderboard() -> None:
+    st.subheader("🏆 Leaderboard")
+    scores = get_top_scores(20)
+    if not scores:
+        st.info("No scores yet. Be the first!")
+    else:
+        st.markdown('<div class="leaderboard-box">', unsafe_allow_html=True)
+        for i, entry in enumerate(scores):
+            medal = "🥇" if i == 0 else "🥈" if i == 1 else "🥉" if i == 2 else "🔹"
+            st.markdown(f"**{medal} {entry.name}**: {entry.score} pts *(Puzzle #{entry.puzzle_id})*")
+        st.markdown('</div>', unsafe_allow_html=True)
+
 def main() -> None:
-    st.set_page_config(page_title="Plant Connections", page_icon="🏭", layout="centered")
+    st.set_page_config(page_title="Plant Connections", page_icon="🏭", layout="wide")
     st.markdown(CSS, unsafe_allow_html=True)
     try:
         init_state()
     except PuzzleBankError as exc:
         st.error(f"Puzzle bank problem: {exc}")
         st.stop()
-    state: GameState = st.session_state.game
-    st.title(f"🏭 Plant Connections #{st.session_state.puzzle_number}")
-    st.caption("Group the 16 terms into 4 categories. Four mistakes allowed.")
-    if is_won(state) or is_lost(state):
-        for group in state.found:
-            render_banner(group)
-        render_end_screen(state)
-    else:
-        render_board(state)
-        render_controls(state)
+        
+    st.title("Plant Connections")
+    
+    col_main, col_leaderboard = st.columns([2.5, 1])
+    
+    with col_main:
+        tab1, tab2 = st.tabs(["Daily Puzzle", "Bonus Puzzle"])
+        with tab1:
+            render_game_tab("daily", "Daily Puzzle")
+        with tab2:
+            render_game_tab("bonus", "Bonus Puzzle")
+            
+    with col_leaderboard:
+        render_leaderboard()
 
 
 main()

@@ -2,138 +2,678 @@
   "launch_date": "2026-08-17",
   "puzzles": [
     {
-      "id": 1,
+      "id": 3,
       "groups": [
-        {"tier": 1, "name": "CENTRIFUGAL PUMP PARTS", "words": ["IMPELLER", "VOLUTE", "WEAR RING", "SHAFT SLEEVE"]},
-        {"tier": 2, "name": "VALVE TYPES", "words": ["GATE", "GLOBE", "BUTTERFLY", "CHECK"]},
-        {"tier": 3, "name": "___ SEAL", "words": ["MECHANICAL", "LABYRINTH", "LIP", "GLAND"]},
-        {"tier": 4, "name": "P&ID ABBREVIATIONS", "words": ["PSV", "FIC", "LT", "TE"]}
+        {
+          "tier": 1,
+          "name": "MEASURED PROCESS VARIABLES",
+          "words": [
+            "FLOW",
+            "LEVEL",
+            "PRESSURE",
+            "TEMPERATURE"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "CONTROL LOOP COMPONENTS",
+          "words": [
+            "SENSOR",
+            "TRANSMITTER",
+            "CONTROLLER",
+            "ACTUATOR"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "PLANT CONTROL SYSTEMS",
+          "words": [
+            "DCS",
+            "PLC",
+            "HMI",
+            "SCADA"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ VALVE",
+          "words": [
+            "RELIEF",
+            "NEEDLE",
+            "BALL",
+            "PLUG"
+          ]
+        }
       ]
     },
     {
       "id": 2,
       "groups": [
-        {"tier": 1, "name": "HEAT EXCHANGER PARTS", "words": ["TUBE", "SHELL", "BAFFLE", "TUBESHEET"]},
-        {"tier": 2, "name": "COMPRESSOR TYPES", "words": ["SCREW", "RECIPROCATING", "CENTRIFUGAL", "AXIAL"]},
-        {"tier": 3, "name": "MATERIAL FAILURE MODES", "words": ["FATIGUE", "CORROSION", "EROSION", "CAVITATION"]},
-        {"tier": 4, "name": "STEAM ___", "words": ["TRAP", "TRACE", "DRUM", "JACKET"]}
-      ]
-    },
-    {
-      "id": 3,
-      "groups": [
-        {"tier": 1, "name": "MEASURED PROCESS VARIABLES", "words": ["FLOW", "LEVEL", "PRESSURE", "TEMPERATURE"]},
-        {"tier": 2, "name": "CONTROL LOOP COMPONENTS", "words": ["SENSOR", "TRANSMITTER", "CONTROLLER", "ACTUATOR"]},
-        {"tier": 3, "name": "PLANT CONTROL SYSTEMS", "words": ["DCS", "PLC", "HMI", "SCADA"]},
-        {"tier": 4, "name": "___ VALVE", "words": ["RELIEF", "NEEDLE", "BALL", "PLUG"]}
-      ]
-    },
-    {
-      "id": 4,
-      "groups": [
-        {"tier": 1, "name": "BEARING TYPES", "words": ["BALL", "ROLLER", "THRUST", "JOURNAL"]},
-        {"tier": 2, "name": "VIBRATION ANALYSIS TERMS", "words": ["AMPLITUDE", "FREQUENCY", "HARMONIC", "IMBALANCE"]},
-        {"tier": 3, "name": "COUPLING TYPES", "words": ["GEAR", "GRID", "DISC", "JAW"]},
-        {"tier": 4, "name": "LUBRICATION TERMS", "words": ["GREASE", "VISCOSITY", "ADDITIVE", "FILM"]}
-      ]
-    },
-    {
-      "id": 5,
-      "groups": [
-        {"tier": 1, "name": "PPE", "words": ["HARD HAT", "GOGGLES", "GLOVES", "RESPIRATOR"]},
-        {"tier": 2, "name": "WORK PERMIT TYPES", "words": ["HOT WORK", "CONFINED SPACE", "LOTO", "EXCAVATION"]},
-        {"tier": 3, "name": "OVERPRESSURE PROTECTION", "words": ["RUPTURE DISK", "SAFETY VALVE", "CONSERVATION VENT", "FLAME ARRESTOR"]},
-        {"tier": 4, "name": "PSM ELEMENT ABBREVIATIONS", "words": ["MOC", "PHA", "PSSR", "MI"]}
-      ]
-    },
-    {
-      "id": 6,
-      "groups": [
-        {"tier": 1, "name": "PIPE FITTINGS", "words": ["ELBOW", "TEE", "REDUCER", "FLANGE"]},
-        {"tier": 2, "name": "PIPE MATERIALS", "words": ["CARBON STEEL", "STAINLESS", "HDPE", "COPPER"]},
-        {"tier": 3, "name": "WELDING PROCESSES", "words": ["TIG", "MIG", "STICK", "ORBITAL"]},
-        {"tier": 4, "name": "___ JOINT", "words": ["EXPANSION", "LAP", "BUTT", "SLIP"]}
+        {
+          "tier": 1,
+          "name": "HEAT EXCHANGER PARTS",
+          "words": [
+            "TUBE",
+            "SHELL",
+            "BAFFLE",
+            "TUBESHEET"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "COMPRESSOR TYPES",
+          "words": [
+            "SCREW",
+            "RECIPROCATING",
+            "CENTRIFUGAL",
+            "AXIAL"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "MATERIAL FAILURE MODES",
+          "words": [
+            "FATIGUE",
+            "CORROSION",
+            "EROSION",
+            "CAVITATION"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "STEAM ___",
+          "words": [
+            "TRAP",
+            "TRACE",
+            "DRUM",
+            "JACKET"
+          ]
+        }
       ]
     },
     {
       "id": 7,
       "groups": [
-        {"tier": 1, "name": "ELECTRIC MOTOR PARTS", "words": ["STATOR", "ROTOR", "WINDING", "FRAME"]},
-        {"tier": 2, "name": "ELECTRICAL UNITS", "words": ["VOLT", "AMP", "OHM", "WATT"]},
-        {"tier": 3, "name": "MOTOR CONTROL EQUIPMENT", "words": ["BREAKER", "STARTER", "OVERLOAD", "VFD"]},
-        {"tier": 4, "name": "___ PHASE", "words": ["SINGLE", "THREE", "GAS", "LIQUID"]}
-      ]
-    },
-    {
-      "id": 8,
-      "groups": [
-        {"tier": 1, "name": "DISTILLATION COLUMN PARTS", "words": ["TRAY", "PACKING", "REBOILER", "CONDENSER"]},
-        {"tier": 2, "name": "REACTOR TYPES", "words": ["BATCH", "CSTR", "PFR", "SEMI-BATCH"]},
-        {"tier": 3, "name": "PLANT UTILITIES", "words": ["STEAM", "NITROGEN", "INSTRUMENT AIR", "COOLING WATER"]},
-        {"tier": 4, "name": "___ POINT", "words": ["FLASH", "BUBBLE", "DEW", "SET"]}
+        {
+          "tier": 1,
+          "name": "ELECTRIC MOTOR PARTS",
+          "words": [
+            "STATOR",
+            "ROTOR",
+            "WINDING",
+            "FRAME"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "ELECTRICAL UNITS",
+          "words": [
+            "VOLT",
+            "AMP",
+            "OHM",
+            "WATT"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "MOTOR CONTROL EQUIPMENT",
+          "words": [
+            "BREAKER",
+            "STARTER",
+            "OVERLOAD",
+            "VFD"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ PHASE",
+          "words": [
+            "SINGLE",
+            "THREE",
+            "GAS",
+            "LIQUID"
+          ]
+        }
       ]
     },
     {
       "id": 9,
       "groups": [
-        {"tier": 1, "name": "MAINTENANCE WORK TYPES", "words": ["PREVENTIVE", "CORRECTIVE", "PREDICTIVE", "EMERGENCY"]},
-        {"tier": 2, "name": "PRECISION MEASURING TOOLS", "words": ["TORQUE WRENCH", "FEELER GAUGE", "DIAL INDICATOR", "MICROMETER"]},
-        {"tier": 3, "name": "NDT METHODS", "words": ["ULTRASONIC", "RADIOGRAPHY", "DYE PENETRANT", "MAG PARTICLE"]},
-        {"tier": 4, "name": "___ TEST", "words": ["HYDRO", "LEAK", "BUMP", "SPARK"]}
+        {
+          "tier": 1,
+          "name": "MAINTENANCE WORK TYPES",
+          "words": [
+            "PREVENTIVE",
+            "CORRECTIVE",
+            "PREDICTIVE",
+            "EMERGENCY"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "PRECISION MEASURING TOOLS",
+          "words": [
+            "TORQUE WRENCH",
+            "FEELER GAUGE",
+            "DIAL INDICATOR",
+            "MICROMETER"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "NDT METHODS",
+          "words": [
+            "ULTRASONIC",
+            "RADIOGRAPHY",
+            "DYE PENETRANT",
+            "MAG PARTICLE"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ TEST",
+          "words": [
+            "HYDRO",
+            "LEAK",
+            "BUMP",
+            "SPARK"
+          ]
+        }
       ]
     },
     {
-      "id": 10,
+      "id": 5,
       "groups": [
-        {"tier": 1, "name": "STORAGE TANK FEATURES", "words": ["MANWAY", "NOZZLE", "VENT", "DIKE"]},
-        {"tier": 2, "name": "LEVEL INSTRUMENT TYPES", "words": ["RADAR", "DP CELL", "FLOAT", "SIGHT GLASS"]},
-        {"tier": 3, "name": "GASKET MATERIALS", "words": ["PTFE", "GRAPHITE", "RUBBER", "SPIRAL WOUND"]},
-        {"tier": 4, "name": "___ FLANGE", "words": ["WELD NECK", "SLIP ON", "BLIND", "SOCKET"]}
+        {
+          "tier": 1,
+          "name": "PPE",
+          "words": [
+            "HARD HAT",
+            "GOGGLES",
+            "GLOVES",
+            "RESPIRATOR"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "WORK PERMIT TYPES",
+          "words": [
+            "HOT WORK",
+            "CONFINED SPACE",
+            "LOTO",
+            "EXCAVATION"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "OVERPRESSURE PROTECTION",
+          "words": [
+            "RUPTURE DISK",
+            "SAFETY VALVE",
+            "CONSERVATION VENT",
+            "FLAME ARRESTOR"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "PSM ELEMENT ABBREVIATIONS",
+          "words": [
+            "MOC",
+            "PHA",
+            "PSSR",
+            "MI"
+          ]
+        }
       ]
     },
     {
-      "id": 11,
+      "id": 8,
       "groups": [
-        {"tier": 1, "name": "PUMP CURVE TERMS", "words": ["HEAD", "NPSH", "EFFICIENCY", "BEP"]},
-        {"tier": 2, "name": "FLOW REGIMES", "words": ["LAMINAR", "TURBULENT", "TRANSITIONAL", "SLUG"]},
-        {"tier": 3, "name": "DIMENSIONLESS NUMBERS", "words": ["REYNOLDS", "PRANDTL", "NUSSELT", "FROUDE"]},
-        {"tier": 4, "name": "___ HAMMER", "words": ["WATER", "JACK", "SLEDGE", "CLAW"]}
-      ]
-    },
-    {
-      "id": 12,
-      "groups": [
-        {"tier": 1, "name": "CORROSION TYPES", "words": ["PITTING", "CREVICE", "GALVANIC", "UNIFORM"]},
-        {"tier": 2, "name": "MECHANICAL PROPERTY TESTS", "words": ["HARDNESS", "TENSILE", "CREEP", "IMPACT"]},
-        {"tier": 3, "name": "PROTECTIVE COATINGS", "words": ["EPOXY", "GALVANIZING", "PAINT", "LINING"]},
-        {"tier": 4, "name": "___ STEEL", "words": ["CARBON", "MILD", "TOOL", "SPRING"]}
-      ]
-    },
-    {
-      "id": 13,
-      "groups": [
-        {"tier": 1, "name": "BOILER COMPONENTS", "words": ["ECONOMIZER", "SUPERHEATER", "BURNER", "STACK"]},
-        {"tier": 2, "name": "WATER TREATMENT EQUIPMENT", "words": ["SOFTENER", "RO UNIT", "DEAERATOR", "CLARIFIER"]},
-        {"tier": 3, "name": "COMBUSTION REQUIREMENTS", "words": ["FUEL", "AIR", "IGNITION", "FLAME"]},
-        {"tier": 4, "name": "___ WATER", "words": ["FEED", "COOLING", "FIRE", "RAW"]}
+        {
+          "tier": 1,
+          "name": "DISTILLATION COLUMN PARTS",
+          "words": [
+            "TRAY",
+            "PACKING",
+            "REBOILER",
+            "CONDENSER"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "REACTOR TYPES",
+          "words": [
+            "BATCH",
+            "CSTR",
+            "PFR",
+            "SEMI-BATCH"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "PLANT UTILITIES",
+          "words": [
+            "STEAM",
+            "NITROGEN",
+            "INSTRUMENT AIR",
+            "COOLING WATER"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ POINT",
+          "words": [
+            "FLASH",
+            "BUBBLE",
+            "DEW",
+            "SET"
+          ]
+        }
       ]
     },
     {
       "id": 14,
       "groups": [
-        {"tier": 1, "name": "STEAM TURBINE PARTS", "words": ["BLADE", "NOZZLE RING", "CASING", "GOVERNOR"]},
-        {"tier": 2, "name": "INDUSTRIAL FAN TYPES", "words": ["AXIAL", "FORCED DRAFT", "INDUCED DRAFT", "BLOWER"]},
-        {"tier": 3, "name": "SEAL SUPPORT FLUIDS", "words": ["FLUSH", "QUENCH", "BARRIER", "BUFFER"]},
-        {"tier": 4, "name": "___ SPEED", "words": ["CRITICAL", "TRIP", "RATED", "OVER"]}
+        {
+          "tier": 1,
+          "name": "STEAM TURBINE PARTS",
+          "words": [
+            "BLADE",
+            "NOZZLE RING",
+            "CASING",
+            "GOVERNOR"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "INDUSTRIAL FAN TYPES",
+          "words": [
+            "AXIAL",
+            "FORCED DRAFT",
+            "INDUCED DRAFT",
+            "BLOWER"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "SEAL SUPPORT FLUIDS",
+          "words": [
+            "FLUSH",
+            "QUENCH",
+            "BARRIER",
+            "BUFFER"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ SPEED",
+          "words": [
+            "CRITICAL",
+            "TRIP",
+            "RATED",
+            "OVER"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "groups": [
+        {
+          "tier": 1,
+          "name": "BOILER COMPONENTS",
+          "words": [
+            "ECONOMIZER",
+            "SUPERHEATER",
+            "BURNER",
+            "STACK"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "WATER TREATMENT EQUIPMENT",
+          "words": [
+            "SOFTENER",
+            "RO UNIT",
+            "DEAERATOR",
+            "CLARIFIER"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "COMBUSTION REQUIREMENTS",
+          "words": [
+            "FUEL",
+            "AIR",
+            "IGNITION",
+            "FLAME"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ WATER",
+          "words": [
+            "FEED",
+            "COOLING",
+            "FIRE",
+            "RAW"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "groups": [
+        {
+          "tier": 1,
+          "name": "PIPE FITTINGS",
+          "words": [
+            "ELBOW",
+            "TEE",
+            "REDUCER",
+            "FLANGE"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "PIPE MATERIALS",
+          "words": [
+            "CARBON STEEL",
+            "STAINLESS",
+            "HDPE",
+            "COPPER"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "WELDING PROCESSES",
+          "words": [
+            "TIG",
+            "MIG",
+            "STICK",
+            "ORBITAL"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ JOINT",
+          "words": [
+            "EXPANSION",
+            "LAP",
+            "BUTT",
+            "SLIP"
+          ]
+        }
       ]
     },
     {
       "id": 15,
       "groups": [
-        {"tier": 1, "name": "PLANT DOCUMENTS", "words": ["PFD", "SOP", "DATASHEET", "ISOMETRIC"]},
-        {"tier": 2, "name": "CONTROLLER TUNING TERMS", "words": ["GAIN", "RESET", "RATE", "DEADBAND"]},
-        {"tier": 3, "name": "ALARM MANAGEMENT TERMS", "words": ["PRIORITY", "ACKNOWLEDGE", "FLOOD", "SHELVE"]},
-        {"tier": 4, "name": "___ ORDER", "words": ["WORK", "CHANGE", "PURCHASE", "BATCH"]}
+        {
+          "tier": 1,
+          "name": "PLANT DOCUMENTS",
+          "words": [
+            "PFD",
+            "SOP",
+            "DATASHEET",
+            "ISOMETRIC"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "CONTROLLER TUNING TERMS",
+          "words": [
+            "GAIN",
+            "RESET",
+            "RATE",
+            "DEADBAND"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "ALARM MANAGEMENT TERMS",
+          "words": [
+            "PRIORITY",
+            "ACKNOWLEDGE",
+            "FLOOD",
+            "SHELVE"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ ORDER",
+          "words": [
+            "WORK",
+            "CHANGE",
+            "PURCHASE",
+            "BATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "groups": [
+        {
+          "tier": 1,
+          "name": "CORROSION TYPES",
+          "words": [
+            "PITTING",
+            "CREVICE",
+            "GALVANIC",
+            "UNIFORM"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "MECHANICAL PROPERTY TESTS",
+          "words": [
+            "HARDNESS",
+            "TENSILE",
+            "CREEP",
+            "IMPACT"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "PROTECTIVE COATINGS",
+          "words": [
+            "EPOXY",
+            "GALVANIZING",
+            "PAINT",
+            "LINING"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ STEEL",
+          "words": [
+            "CARBON",
+            "MILD",
+            "TOOL",
+            "SPRING"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "groups": [
+        {
+          "tier": 1,
+          "name": "STORAGE TANK FEATURES",
+          "words": [
+            "MANWAY",
+            "NOZZLE",
+            "VENT",
+            "DIKE"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "LEVEL INSTRUMENT TYPES",
+          "words": [
+            "RADAR",
+            "DP CELL",
+            "FLOAT",
+            "SIGHT GLASS"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "GASKET MATERIALS",
+          "words": [
+            "PTFE",
+            "GRAPHITE",
+            "RUBBER",
+            "SPIRAL WOUND"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ FLANGE",
+          "words": [
+            "WELD NECK",
+            "SLIP ON",
+            "BLIND",
+            "SOCKET"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "groups": [
+        {
+          "tier": 1,
+          "name": "CENTRIFUGAL PUMP PARTS",
+          "words": [
+            "IMPELLER",
+            "VOLUTE",
+            "WEAR RING",
+            "SHAFT SLEEVE"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "VALVE TYPES",
+          "words": [
+            "GATE",
+            "GLOBE",
+            "BUTTERFLY",
+            "CHECK"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "___ SEAL",
+          "words": [
+            "MECHANICAL",
+            "LABYRINTH",
+            "LIP",
+            "GLAND"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "P&ID ABBREVIATIONS",
+          "words": [
+            "PSV",
+            "FIC",
+            "LT",
+            "TE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "groups": [
+        {
+          "tier": 1,
+          "name": "BEARING TYPES",
+          "words": [
+            "BALL",
+            "ROLLER",
+            "THRUST",
+            "JOURNAL"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "VIBRATION ANALYSIS TERMS",
+          "words": [
+            "AMPLITUDE",
+            "FREQUENCY",
+            "HARMONIC",
+            "IMBALANCE"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "COUPLING TYPES",
+          "words": [
+            "GEAR",
+            "GRID",
+            "DISC",
+            "JAW"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "LUBRICATION TERMS",
+          "words": [
+            "GREASE",
+            "VISCOSITY",
+            "ADDITIVE",
+            "FILM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "groups": [
+        {
+          "tier": 1,
+          "name": "PUMP CURVE TERMS",
+          "words": [
+            "HEAD",
+            "NPSH",
+            "EFFICIENCY",
+            "BEP"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "FLOW REGIMES",
+          "words": [
+            "LAMINAR",
+            "TURBULENT",
+            "TRANSITIONAL",
+            "SLUG"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "DIMENSIONLESS NUMBERS",
+          "words": [
+            "REYNOLDS",
+            "PRANDTL",
+            "NUSSELT",
+            "FROUDE"
+          ]
+        },
+        {
+          "tier": 4,
+          "name": "___ HAMMER",
+          "words": [
+            "WATER",
+            "JACK",
+            "SLEDGE",
+            "CLAW"
+          ]
+        }
       ]
     }
   ]
